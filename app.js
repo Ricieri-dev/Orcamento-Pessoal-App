@@ -29,7 +29,11 @@ function cadastrarDespesa(){
         
     );
 
-    console.log(despesa)
+    gravar(despesa)
 
     alert("Despesa cadastrada !")
+}
+
+function gravar(d){
+    localStorage.setItem('despesa', JSON.stringify(d))
 }
