@@ -35,5 +35,5 @@ function cadastrarDespesa(){
 }
 
 function gravar(d){
-    localStorage.setItem('despesa', JSON.stringify(d))
+    localStorage.setItem('despesa', JSON.stringify(d))//set Item sobrepõe obj existente
 }
