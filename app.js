@@ -7,8 +7,31 @@ class Despesa {
         this.descricao = descricao
         this.valor = valor
     }
-
 }
+
+class Bd{
+    constructor(){
+        let id = localStorage.getItem('id')
+
+        if (id === null){
+            localStorage.setItem('id',0);
+        }
+    }
+    getProximoId(){
+        let proximoId = localStorage.getItem('id');
+        return Number(proximoId)+1
+    }
+
+    gravar(d){
+        let id = this.getProximoId()
+
+        localStorage.setItem(id.toString(), JSON.stringify(d))
+        localStorage.setItem('id', id.toString())
+    }   
+}
+
+let bd = new Bd()
+
 
 function cadastrarDespesa(){
     let ano = document.getElementById('ano');
@@ -29,11 +52,8 @@ function cadastrarDespesa(){
         
     );
 
-    gravar(despesa)
+    bd.gravar(despesa)
 
     alert("Despesa cadastrada !")
 }
 
-function gravar(d){
-    localStorage.setItem('despesa', JSON.stringify(d))//set Item sobrepõe obj existente
-}
