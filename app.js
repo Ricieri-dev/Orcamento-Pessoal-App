@@ -61,14 +61,28 @@ function cadastrarDespesa(){
         
     );
     if (despesa.validarDados()){
-        bd.gravar()
-        //dialog d sucesso
+        bd.gravar(despesa)
+        let header = document.getElementById('modalHeader')
+        header.classList.add('text-success')
+
+        let modalTitle = document.getElementById('exampleModalLabel').value = "Registro inserido com sucesso !"
+
+        let modalBody = document.getElementById('modalBody').innerHTML = "Despesa cadastrada com sucesso !"
+        
+        $('#modalRegistraDespesa').modal('show')
+
     }else{
-        alert('dados invalidos')
+        let header = document.getElementById('modalHeader')
+        header.classList.toggle('text-danger')
 
+        let modalTitle = document.getElementById('exampleModalLabel').innerHTML = "Erro !"
+
+        let modalBody = document.getElementById('modalBody').innerHTML = "Há campos a sereme preenchidos !"
+
+        $('#modalRegistraDespesa').modal('show')
     }
-    bd.gravar(despesa)
+    
 
-    alert("Despesa cadastrada !")
+
 }
 
