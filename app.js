@@ -62,10 +62,10 @@ function cadastrarDespesa(){
     );
     if (despesa.validarDados()){
         bd.gravar(despesa)
-        let header = document.getElementById('modalHeader')
-        header.classList.add('text-success')
+        document.getElementById('modalHeader').classList.add('text-success')
 
-        let modalTitle = document.getElementById('exampleModalLabel').value = "Registro inserido com sucesso !"
+        document.getElementById('exampleModalLabel').innerHTML = "Registro inserido com sucesso !"
+        document.getElementById('exampleModalLabel').className.toggle('text-success')
 
         let modalBody = document.getElementById('modalBody').innerHTML = "Despesa cadastrada com sucesso !"
         
@@ -77,7 +77,7 @@ function cadastrarDespesa(){
 
         let modalTitle = document.getElementById('exampleModalLabel').innerHTML = "Erro !"
 
-        let modalBody = document.getElementById('modalBody').innerHTML = "Há campos a sereme preenchidos !"
+        let modalBody = document.getElementById('modalBody').innerHTML = "Há campos a serem preenchidos !"
 
         $('#modalRegistraDespesa').modal('show')
     }
