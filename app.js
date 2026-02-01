@@ -62,22 +62,35 @@ function cadastrarDespesa(){
     );
     if (despesa.validarDados()){
         bd.gravar(despesa)
-        document.getElementById('modalHeader').classList.add('text-success')
 
-        document.getElementById('exampleModalLabel').innerHTML = "Registro inserido com sucesso !"
-        document.getElementById('exampleModalLabel').className.toggle('text-success')
+        let titulo = document.getElementById('exampleModalLabel')
+        let corpo = document.getElementById('modalBody')
+        let botao = document.getElementById('botaoModal')
 
-        let modalBody = document.getElementById('modalBody').innerHTML = "Despesa cadastrada com sucesso !"
-        
+        titulo.classList.remove('text-danger')
+        titulo.classList.add('text-success')
+        titulo.innerHTML = "Registro inserido com sucesso!"
+
+        corpo.innerHTML = "Registro inserido!"
+
+        botao.classList.remove('btn-danger')
+        botao.classList.add('btn-success')
+
         $('#modalRegistraDespesa').modal('show')
 
     }else{
-        let header = document.getElementById('modalHeader')
-        header.classList.toggle('text-danger')
+        let titulo = document.getElementById('exampleModalLabel')
+        let corpo = document.getElementById('modalBody')
+        let botao = document.getElementById('botaoModal')
 
-        let modalTitle = document.getElementById('exampleModalLabel').innerHTML = "Erro !"
+        titulo.classList.remove('text-success')
+        titulo.classList.add('text-danger')
+        titulo.innerHTML = "Erro !"
 
-        let modalBody = document.getElementById('modalBody').innerHTML = "Há campos a serem preenchidos !"
+        corpo.innerHTML = "Há campos a serem preenchidos !"
+
+        botao.classList.remove('btn-success')
+        botao.classList.add('btn-danger')
 
         $('#modalRegistraDespesa').modal('show')
     }
