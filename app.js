@@ -1,5 +1,5 @@
 class Despesa {
-    constructor(ano,mes,dia,tipo,descricao,valor){
+    constructor(ano, mes, dia, tipo, descricao, valor) {
         this.ano = ano
         this.mes = mes
         this.dia = dia
@@ -8,9 +8,9 @@ class Despesa {
         this.valor = valor
     }
 
-    validarDados(){
-        for(let i in this){
-            if(this[i] == undefined || this[i] == '' || this[i] == null ){
+    validarDados() {
+        for (let i in this) {
+            if (this[i] == undefined || this[i] == '' || this[i] == null) {
                 return false
             }
         }
@@ -18,113 +18,100 @@ class Despesa {
     }
 }
 
-class Bd{
-    constructor(){
+class Bd {
+    constructor() {
         let id = localStorage.getItem('id')
 
-        if (id === null){
-            localStorage.setItem('id',0);
+        if (id === null) {
+            localStorage.setItem('id', 0)
         }
     }
-    getProximoId(){
-        let proximoId = localStorage.getItem('id');
-        return Number(proximoId)+1
+
+    getProximoId() {
+        let proximoId = localStorage.getItem('id')
+        return Number(proximoId) + 1
     }
 
-    gravar(d){
+    gravar(d) {
         let id = this.getProximoId()
 
         localStorage.setItem(id.toString(), JSON.stringify(d))
         localStorage.setItem('id', id.toString())
     }
     
-    recuperarTodosRegistros(){
-
-        //array de despesas 
+    recuperarTodosRegistros() {
+        // array de despesas
         let despesas = Array()
 
         let id = localStorage.getItem('id')
 
-        //recuperar todas as despesas cadastradas localStorage
-        for (let i= 1; i <= id; i++){
-            //recuperar a despesa
-            let despesa = JSON.parse(localStorage.getItem(i));
+        // recuperar todas as despesas cadastradas localStorage
+        for (let i = 1; i <= id; i++) {
+            // recuperar a despesa
+            let despesa = JSON.parse(localStorage.getItem(i))
 
-            //verificar se existe a possibilidade de haver índices que foram pulados/removidos
-            //nestes casos, nós vamos pular esses índices
-            if(despesa === null){
+            // verificar se existe a possibilidade de haver índices pulados/removidos
+            // nestes casos, vamos pular esses índices
+            if (despesa === null) {
                 continue
             }
+            despesa.id = i
             despesas.push(despesa)
-        
         }
         return despesas
     }
 
-    pesquisar(despesa){
+    pesquisar(despesa) {
         let despesasFiltradas = Array()
         despesasFiltradas = this.recuperarTodosRegistros()
-        
-        console.log(despesa)
 
-        console.log(despesasFiltradas)
-
-        //ano
-        if(despesa.ano != ''){
-        console.log('filtro de ano')
-        despesasFiltradas = despesasFiltradas.filter(d => d.ano == despesa.ano)
-        console.log(despesasFiltradas)
+        // ano
+        if (despesa.ano != '') {
+            despesasFiltradas = despesasFiltradas.filter(d => d.ano == despesa.ano)
         }
 
-        //mes
-        if(despesa.mes != ''){
-        console.log('filtro de mes')
-        despesasFiltradas = despesasFiltradas.filter(d => d.mes == despesa.mes)
-        console.log(despesasFiltradas)
-
+        // mes
+        if (despesa.mes != '') {
+            despesasFiltradas = despesasFiltradas.filter(d => d.mes == despesa.mes)
         }
-        //dia
-        if(despesa.dia != ''){
-        console.log('filtro de dia')
-        despesasFiltradas = despesasFiltradas.filter(d => d.dia == despesa.dia)
-        console.log(despesasFiltradas)
+
+        // dia
+        if (despesa.dia != '') {
+            despesasFiltradas = despesasFiltradas.filter(d => d.dia == despesa.dia)
         }
         
-        //tipo
-        if(despesa.tipo != ''){
-        console.log('filtro de tipo')
-        despesasFiltradas = despesasFiltradas.filter(d => d.tipo == despesa.tipo)
-        console.log(despesasFiltradas)
+        // tipo
+        if (despesa.tipo != '') {
+            despesasFiltradas = despesasFiltradas.filter(d => d.tipo == despesa.tipo)
         }
-        //descricao
-        if(despesa.descricao != ''){
-        console.log('filtro de descricao')
-        despesasFiltradas = despesasFiltradas.filter(d => d.descricao == despesa.descricao)
-        console.log(despesasFiltradas)
+
+        // descricao
+        if (despesa.descricao != '') {
+            despesasFiltradas = despesasFiltradas.filter(d => d.descricao == despesa.descricao)
         }
-        //valor
-        if(despesa.valor != ''){
-        console.log('filtro de valor')
-        despesasFiltradas = despesasFiltradas.filter(d => d.valor == despesa.valor)
-        console.log(despesasFiltradas)
+
+        // valor
+        if (despesa.valor != '') {
+            despesasFiltradas = despesasFiltradas.filter(d => d.valor == despesa.valor)
         }
 
         return despesasFiltradas
     }
 
+    remover(id) {
+        localStorage.removeItem(id)
+    }
 }
 
 let bd = new Bd()
 
-
-function cadastrarDespesa(){
-    let ano = document.getElementById('ano');
-    let mes = document.getElementById('mes');
-    let dia = document.getElementById('dia');
-    let tipo = document.getElementById('tipo');
-    let descricao = document.getElementById('descricao');
-    let valor = document.getElementById('valor');
-
+function cadastrarDespesa() {
+    let ano = document.getElementById('ano')
+    let mes = document.getElementById('mes')
+    let dia = document.getElementById('dia')
+    let tipo = document.getElementById('tipo')
+    let descricao = document.getElementById('descricao')
+    let valor = document.getElementById('valor')
 
     let despesa = new Despesa(
         ano.value,
@@ -133,12 +120,10 @@ function cadastrarDespesa(){
         tipo.value,
         descricao.value,
         valor.value
-        
-    );
-    if (despesa.validarDados()){
-        bd.gravar(despesa)
+    )
 
-        
+    if (despesa.validarDados()) {
+        bd.gravar(despesa)
 
         let titulo = document.getElementById('exampleModalLabel')
         let corpo = document.getElementById('modalBody')
@@ -154,14 +139,13 @@ function cadastrarDespesa(){
         botao.classList.add('btn-success')
 
         $('#modalRegistraDespesa').modal('show')
-        ano.value  = ''
+        ano.value = ''
         mes.value = ''
         dia.value = ''
         tipo.value = ''
-        descricao.value = '' 
+        descricao.value = ''
         valor.value = ''
-
-    }else{
+    } else {
         let titulo = document.getElementById('exampleModalLabel')
         let corpo = document.getElementById('modalBody')
         let botao = document.getElementById('botaoModal')
@@ -179,38 +163,38 @@ function cadastrarDespesa(){
     }
 }
 
-function carregaListaDespesas(despesas = Array(), filtro = false){
-    if(despesas.length == 0 && filtro == false){
-    despesas = bd.recuperarTodosRegistros()
+function carregaListaDespesas(despesas = Array(), filtro = false) {
+    if (despesas.length == 0 && filtro == false) {
+        despesas = bd.recuperarTodosRegistros()
     }
-    //selecionando o elemento tbody da tabela 
+    // selecionando o elemento tbody da tabela
     let listaDespesas = document.getElementById('listaDespesas')
     listaDespesas.innerHTML = ''
 
-
-    //percorrer o array despesas, listando cada despesa de forma dinâmica
-
-    despesas.forEach(function(d){
-
-        
-        
-        //criando a linha (tr)
+    // percorrer o array despesas, listando cada despesa de forma dinâmica
+    despesas.forEach(function(d) {
+        // criando a linha (tr)
         let linha = listaDespesas.insertRow()
 
-        //criar as colunas (td)
+        // criar as colunas (td)
         linha.insertCell(0).innerHTML = `${d.dia}/${d.mes}/${d.ano}`  
 
-        //ajustar o tipo
-        switch(d.tipo){
-            case '1': d.tipo = 'Alimentação'
+        // ajustar o tipo
+        switch (d.tipo) {
+            case '1':
+                d.tipo = 'Alimentação'
                 break;
-            case '2': d.tipo = 'Educação'
+            case '2':
+                d.tipo = 'Educação'
                 break;
-            case '3': d.tipo = 'Lazer'
+            case '3':
+                d.tipo = 'Lazer'
                 break;
-            case '4': d.tipo = 'Saúde'
+            case '4':
+                d.tipo = 'Saúde'
                 break;
-            case '5': d.tipo = 'Transporte'
+            case '5':
+                d.tipo = 'Transporte'
                 break;
         }
         linha.insertCell(1).innerHTML = d.tipo
@@ -218,26 +202,30 @@ function carregaListaDespesas(despesas = Array(), filtro = false){
         linha.insertCell(2).innerHTML = d.descricao
         linha.insertCell(3).innerHTML = d.valor
         
-
+        // criar botão de exclusão
+        let btn = document.createElement("button")
+        btn.className = 'btn btn-danger'
+        btn.innerHTML = '<i class="fas fa-times"></i>'
+        btn.id = `id_despesa_${d.id}`
+        btn.onclick = function() {
+            let id = this.id.replace('id_despesa_', '')
+            bd.remover(id)
+            window.location.reload()
+        }
+        linha.insertCell(4).append(btn)
     })
 }
 
-function pesquisarDespesa(){
-    let ano = document.getElementById('ano').value;
-    let mes = document.getElementById('mes').value;
-    let dia = document.getElementById('dia').value;
-    let tipo = document.getElementById('tipo').value;
-    let descricao = document.getElementById('descricao').value;
+function pesquisarDespesa() {
+    let ano = document.getElementById('ano').value
+    let mes = document.getElementById('mes').value
+    let dia = document.getElementById('dia').value
+    let tipo = document.getElementById('tipo').value
+    let descricao = document.getElementById('descricao').value
     let valor = document.getElementById('valor').value
 
-    let despesa = new Despesa(ano,mes,dia,tipo,descricao,valor)
+    let despesa = new Despesa(ano, mes, dia, tipo, descricao, valor)
+    let despesas = bd.pesquisar(despesa)
 
-    let despesas =  bd.pesquisar(despesa)
-
-    carregaListaDespesas(despesas,true)
-    
-    
-    
+    carregaListaDespesas(despesas, true)
 }
-
-
