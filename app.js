@@ -1,3 +1,6 @@
+
+
+
 class Despesa {
     constructor(ano, mes, dia, tipo, descricao, valor) {
         this.ano = ano
@@ -229,3 +232,4 @@ function pesquisarDespesa() {
 
     carregaListaDespesas(despesas, true)
 }
+
